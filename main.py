@@ -35,27 +35,10 @@ def go_back():
         del st.session_state["mindset_activity"]
     st.session_state.page = "home"
 
-# Styled buttons function
-def styled_button(label, color):
-    return st.markdown(f"""
-        <style>
-        .styled-button {{
-            background-color: {color};
-            color: white;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            text-align: center;
-            display: inline-block;
-        }}
-        .styled-button:hover {{
-            background-color: darken({color}, 10%);
-        }}
-        </style>
-        <div class="styled-button" onclick="window.location.reload();">{label}</div>
-    """, unsafe_allow_html=True)
+# Function for a styled blue "Return to Homepage" button
+def return_to_homepage_button():
+    if st.button("Return to Homepage", key="return_home"):
+        go_back()
 
 # Homepage with title, prompt, and buttons to navigate to main features
 if st.session_state.page == "home":
@@ -103,7 +86,7 @@ if st.session_state.page == "Healthy Eating":
         # Macronutrient Calculator Prompt
         st.write("Once you have your macronutrients from the calculator, explore the daily menu to find food options that align with your intake goals.")
 
-        # Attempt to embed calculator if supported
+        # Embed the calculator if possible
         st.subheader("Macronutrient Calculator")
         try:
             st.components.v1.iframe("https://www.calculator.net/macro-calculator.html", height=600)
@@ -120,9 +103,8 @@ if st.session_state.page == "Healthy Eating":
             response = get_chatgpt_response(user_input_eating)
             st.write(response)
 
-    # Final Navigation Button
-    if "eating_goal" in st.session_state:
-        styled_button("Return to Homepage", "#007bff")  # Blue color
+        # Final Navigation Button to Return to Homepage
+        return_to_homepage_button()
 
 # ---------------------- Healthy Lifestyle Section ----------------------
 if st.session_state.page == "Healthy Lifestyle":
@@ -168,9 +150,8 @@ if st.session_state.page == "Healthy Lifestyle":
             response = get_chatgpt_response(user_input_lifestyle)
             st.write(response)
 
-    # Final Navigation Button
-    if "lifestyle_goal" in st.session_state:
-        styled_button("Return to Homepage", "#007bff")  # Blue color
+        # Final Navigation Button to Return to Homepage
+        return_to_homepage_button()
 
 # ---------------------- Healthy Mindsets Section ----------------------
 if st.session_state.page == "Healthy Mindsets":
@@ -187,4 +168,23 @@ if st.session_state.page == "Healthy Mindsets":
             st.session_state.mindset_activity = "Self-Reflection"
 
     # Display information based on selected activity
-    if "mindset_activity" in
+    if "mindset_activity" in st.session_state:
+        if st.session_state.mindset_activity == "Relaxation":
+            st.video("https://www.youtube.com/watch?v=ZToicYcHIOU")
+        elif st.session_state.mindset_activity == "Breathing":
+            st.video("https://youtu.be/DbDoBzGY3vo?si=xWVePxgCv6NJVhM-")
+        elif st.session_state.mindset_activity == "Self-Reflection":
+            st.write("Start a gratitude journal or reflect on positive moments in your day.")
+
+        # Option for counseling support
+        if st.button("Need additional support?"):
+            st.write("Consider talking to someone at the [Bentley Counseling Center](https://www.bentley.edu/university-life/student-health/counseling-center).")
+
+        # ChatGPT for mental well-being questions
+        user_input_mindsets = st.text_input("Have a question about mental well-being?")
+        if user_input_mindsets:
+            response = get_chatgpt_response(user_input_mindsets)
+            st.write(response)
+
+        # Final Navigation Button to Return to Homepage
+        return_to_homepage_button()
