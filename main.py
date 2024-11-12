@@ -25,20 +25,11 @@ def get_chatgpt_response(user_input):
 if "page" not in st.session_state:
     st.session_state.page = "home"
 
-# Back button function
-def go_back():
-    if "eating_goal" in st.session_state:
-        del st.session_state["eating_goal"]
-    if "lifestyle_goal" in st.session_state:
-        del st.session_state["lifestyle_goal"]
-    if "mindset_activity" in st.session_state:
-        del st.session_state["mindset_activity"]
+# Define a function to reset the session state and navigate to the homepage
+def return_to_homepage():
+    for key in list(st.session_state.keys()):
+        del st.session_state[key]
     st.session_state.page = "home"
-
-# Function for a styled blue "Return to Homepage" button
-def return_to_homepage_button():
-    if st.button("Return to Homepage", key="return_home"):
-        go_back()
 
 # Homepage with title, prompt, and buttons to navigate to main features
 if st.session_state.page == "home":
@@ -83,13 +74,10 @@ if st.session_state.page == "Healthy Eating":
         }
         st.write(goal_blurb[st.session_state.eating_goal])
 
-        # Macronutrient Calculator Prompt
-        st.write("Once you have your macronutrients from the calculator, explore the daily menu to find food options that align with your intake goals.")
-
-        # Embed the calculator if possible
+        # Embed the calculator with adjusted height
         st.subheader("Macronutrient Calculator")
         try:
-            st.components.v1.iframe("https://www.calculator.net/macro-calculator.html", height=600)
+            st.components.v1.iframe("https://www.calculator.net/macro-calculator.html", height=1000, width=700)  # Increased height
         except:
             st.write("Please use the [Macro Calculator](https://www.calculator.net/macro-calculator.html) to determine your intake goals.")
 
@@ -103,8 +91,9 @@ if st.session_state.page == "Healthy Eating":
             response = get_chatgpt_response(user_input_eating)
             st.write(response)
 
-        # Final Navigation Button to Return to Homepage
-        return_to_homepage_button()
+        # Return to Homepage Button
+        if st.button("Return to Homepage", key="return_home"):
+            return_to_homepage()
 
 # ---------------------- Healthy Lifestyle Section ----------------------
 if st.session_state.page == "Healthy Lifestyle":
@@ -150,8 +139,9 @@ if st.session_state.page == "Healthy Lifestyle":
             response = get_chatgpt_response(user_input_lifestyle)
             st.write(response)
 
-        # Final Navigation Button to Return to Homepage
-        return_to_homepage_button()
+        # Return to Homepage Button
+        if st.button("Return to Homepage", key="return_home_lifestyle"):
+            return_to_homepage()
 
 # ---------------------- Healthy Mindsets Section ----------------------
 if st.session_state.page == "Healthy Mindsets":
@@ -186,5 +176,6 @@ if st.session_state.page == "Healthy Mindsets":
             response = get_chatgpt_response(user_input_mindsets)
             st.write(response)
 
-        # Final Navigation Button to Return to Homepage
-        return_to_homepage_button()
+        # Return to Homepage Button
+        if st.button("Return to Homepage", key="return_home_mindset"):
+            return_to_homepage()
