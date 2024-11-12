@@ -15,6 +15,7 @@ def get_chatgpt_response(user_input):
         )
         return response.choices[0].text.strip()
     except Exception as e:
+        st.write(f"Error: {e}")
         return "There was an error retrieving the response. Please try again."
 
 # Initialize session state to track the selected page and sub-steps
@@ -27,7 +28,7 @@ if st.session_state.page == "home":
     st.subheader("Welcome!")
     st.write("Select a wellness area to get started:")
 
-    # Navigation buttons
+    # Navigation buttons with session state updates
     if st.button("Healthy Eating"):
         st.session_state.page = "Healthy Eating"
     elif st.button("Healthy Lifestyle"):
@@ -36,7 +37,7 @@ if st.session_state.page == "home":
         st.session_state.page = "Healthy Mindsets"
 
 # ---------------------- Healthy Eating Section ----------------------
-elif st.session_state.page == "Healthy Eating":
+if st.session_state.page == "Healthy Eating":
     st.header("Healthy Eating")
     st.write("Let’s start by understanding your dietary goals and helping you find balanced meals that fit your needs.")
     
@@ -44,17 +45,22 @@ elif st.session_state.page == "Healthy Eating":
     if "eating_goal" not in st.session_state:
         if st.button("Be more mindful about my diet"):
             st.session_state.eating_goal = "Mindful"
+            st.session_state.page = "Eating Goal"
         elif st.button("Build muscle"):
             st.session_state.eating_goal = "Build Muscle"
+            st.session_state.page = "Eating Goal"
         elif st.button("Lose fat"):
             st.session_state.eating_goal = "Lose Fat"
+            st.session_state.page = "Eating Goal"
         elif st.button("Gain weight"):
             st.session_state.eating_goal = "Gain Weight"
+            st.session_state.page = "Eating Goal"
         elif st.button("Maintain my physique"):
             st.session_state.eating_goal = "Maintain Physique"
+            st.session_state.page = "Eating Goal"
 
     # Display information based on selected goal
-    else:
+    if st.session_state.page == "Eating Goal":
         if st.session_state.eating_goal == "Mindful":
             st.write("Mindful eating involves choosing foods that nourish your body and practicing portion control.")
         elif st.session_state.eating_goal == "Build Muscle":
@@ -82,7 +88,7 @@ elif st.session_state.page == "Healthy Eating":
             st.session_state.page = "Healthy Lifestyle"
 
 # ---------------------- Healthy Lifestyle Section ----------------------
-elif st.session_state.page == "Healthy Lifestyle":
+if st.session_state.page == "Healthy Lifestyle":
     st.header("Healthy Lifestyle")
     st.write("Staying active is a great way to support both mental and physical well-being. Let’s find activities that fit your lifestyle goals.")
 
@@ -90,15 +96,19 @@ elif st.session_state.page == "Healthy Lifestyle":
     if "lifestyle_goal" not in st.session_state:
         if st.button("Support my fitness and energy"):
             st.session_state.lifestyle_goal = "Fitness and Energy"
+            st.session_state.page = "Lifestyle Goal"
         elif st.button("Have fun and stay active"):
             st.session_state.lifestyle_goal = "Fun and Active"
+            st.session_state.page = "Lifestyle Goal"
         elif st.button("Try something new"):
             st.session_state.lifestyle_goal = "Try New"
+            st.session_state.page = "Lifestyle Goal"
         elif st.button("Build strength and endurance"):
             st.session_state.lifestyle_goal = "Strength and Endurance"
+            st.session_state.page = "Lifestyle Goal"
 
     # Display information based on selected activity goal
-    else:
+    if st.session_state.page == "Lifestyle Goal":
         if st.session_state.lifestyle_goal == "Fitness and Energy":
             st.write("- **Cardio**: Take a walk or run on the campus track.")
             st.write("- **Pool**: Swim at the [campus pool](https://events.bentley.edu/dana_center_pool_996).")
@@ -123,7 +133,7 @@ elif st.session_state.page == "Healthy Lifestyle":
             st.session_state.page = "Healthy Eating"
 
 # ---------------------- Healthy Mindsets Section ----------------------
-elif st.session_state.page == "Healthy Mindsets":
+if st.session_state.page == "Healthy Mindsets":
     st.header("Healthy Mindsets")
     st.write("Mental well-being is essential. Explore these resources to support calmness, focus, and a positive outlook.")
 
@@ -131,13 +141,16 @@ elif st.session_state.page == "Healthy Mindsets":
     if "mindset_activity" not in st.session_state:
         if st.button("Guided relaxation exercise"):
             st.session_state.mindset_activity = "Relaxation"
+            st.session_state.page = "Mindset Activity"
         elif st.button("Breathing techniques"):
             st.session_state.mindset_activity = "Breathing"
+            st.session_state.page = "Mindset Activity"
         elif st.button("Self-reflection and gratitude"):
             st.session_state.mindset_activity = "Self-Reflection"
+            st.session_state.page = "Mindset Activity"
 
     # Display information based on selected activity
-    else:
+    if st.session_state.page == "Mindset Activity":
         if st.session_state.mindset_activity == "Relaxation":
             st.write("Try this [guided meditation](https://www.youtube.com/watch?v=ZToicYcHIOU) for relaxation.")
         elif st.session_state.mindset_activity == "Breathing":
