@@ -8,6 +8,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 # Updated ChatGPT interaction function using ChatCompletion API
 def get_chatgpt_response(user_input):
     try:
+        # Use ChatCompletion API with gpt-3.5-turbo
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -16,10 +17,10 @@ def get_chatgpt_response(user_input):
             ],
             max_tokens=100
         )
+        # Extract and return the assistant's response
         return response['choices'][0]['message']['content'].strip()
     except Exception as e:
-        st.write(f"Error: {e}")
-        return "There was an error retrieving the response. Please try again."
+        return f"There was an error retrieving the response: {e}"
 
 # Initialize session state to track the selected page and sub-steps
 if "page" not in st.session_state:
