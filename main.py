@@ -34,7 +34,7 @@ def go_back():
 
 # Homepage with title, prompt, and buttons to navigate to main features
 if st.session_state.page == "home":
-    st.title("Bentley Wellness Support")
+    st.title("WellNest")
     st.subheader("Welcome!")
     st.write("Select a wellness area to get started:")
 
@@ -112,4 +112,65 @@ if st.session_state.page == "Healthy Lifestyle":
             "Fitness and Energy": "Engaging in cardio activities such as jogging, swimming, or brisk walking supports cardiovascular health and energy levels.",
             "Fun and Active": "Enjoy activities like joining an intramural team or spending time in outdoor spaces for a fun approach to fitness.",
             "Try New": "Explore new exercises like yoga or bodyweight training for a fresh approach to movement.",
-     
+            "Strength and Endurance": "Focus on strength-building exercises like weight training and calisthenics to build endurance and resilience."
+        }
+        st.write(activity_blurb[st.session_state.lifestyle_goal])
+
+        # Special case for "Try New" with Yoga Video
+        if st.session_state.lifestyle_goal == "Try New":
+            st.write("Try a guided yoga session to add variety to your routine.")
+            st.video("https://www.youtube.com/watch?v=EvMTrP8eRvM&pp=ygULR3VpZGVkIHlvZ2E%3D")
+
+        # Select activity level for workout plan generation
+        activity_level = st.selectbox("Choose your activity level:", ["Beginner", "Intermediate", "Advanced"])
+        if st.button("Generate Workout Plan"):
+            workout_prompt = f"Create a {activity_level.lower()} workout plan focused on {st.session_state.lifestyle_goal.lower()}."
+            workout_plan = get_chatgpt_response(workout_prompt)
+            st.write(workout_plan)
+
+        # ChatGPT for additional fitness questions
+        user_input_lifestyle = st.text_input("Have a question about fitness or staying active?")
+        if user_input_lifestyle:
+            response = get_chatgpt_response(user_input_lifestyle)
+            st.write(response)
+
+    # Back Button
+    if st.button("Back"):
+        go_back()
+
+# ---------------------- Healthy Mindsets Section ----------------------
+if st.session_state.page == "Healthy Mindsets":
+    st.header("Healthy Mindsets")
+    st.write("Mental well-being is essential. Explore these resources to support calmness, focus, and a positive outlook.")
+
+    # Display buttons for mental wellness activity
+    if "mindset_activity" not in st.session_state:
+        if st.button("Guided relaxation exercise"):
+            st.session_state.mindset_activity = "Relaxation"
+        elif st.button("Breathing techniques"):
+            st.session_state.mindset_activity = "Breathing"
+        elif st.button("Self-reflection and gratitude"):
+            st.session_state.mindset_activity = "Self-Reflection"
+
+    # Display information based on selected activity
+    if "mindset_activity" in st.session_state:
+        if st.session_state.mindset_activity == "Relaxation":
+            st.video("https://www.youtube.com/watch?v=ZToicYcHIOU")
+        elif st.session_state.mindset_activity == "Breathing":
+            st.video("https://youtu.be/DbDoBzGY3vo?si=xWVePxgCv6NJVhM-")
+        elif st.session_state.mindset_activity == "Self-Reflection":
+            st.write("Start a gratitude journal or reflect on positive moments in your day.")
+
+        # Option for counseling support
+        if st.button("Need additional support?"):
+            st.write("Consider talking to someone at the [Bentley Counseling Center](https://www.bentley.edu/university-life/student-health/counseling-center).")
+
+        # ChatGPT for mental well-being questions
+        user_input_mindsets = st.text_input("Have a question about mental well-being?")
+        if user_input_mindsets:
+            response = get_chatgpt_response(user_input_mindsets)
+            st.write(response)
+
+    # Back Button
+    if st.button("Back"):
+        go_back()
