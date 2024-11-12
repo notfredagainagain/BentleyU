@@ -2,9 +2,10 @@
 
 import openai
 import streamlit as st
+import os
 
-# Fetch OpenAI API key from Streamlit secrets
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+# Use os.getenv to get the API key directly from environment variables
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Define ChatGPT interaction function
 def get_chatgpt_response(user_input):
