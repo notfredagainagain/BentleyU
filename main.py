@@ -5,7 +5,7 @@ import os
 # Fetch OpenAI API key from environment variables
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Define ChatGPT interaction function with updated API usage
+# Updated ChatGPT interaction function using ChatCompletion API
 def get_chatgpt_response(user_input):
     try:
         response = openai.ChatCompletion.create(
@@ -35,12 +35,12 @@ def go_back():
         del st.session_state["mindset_activity"]
     st.session_state.page = "home"
 
-# Styled back button function
-def red_button(label, key=None):
+# Styled buttons function
+def styled_button(label, color):
     return st.markdown(f"""
         <style>
-        .red-button {{
-            background-color: #FF6347;
+        .styled-button {{
+            background-color: {color};
             color: white;
             padding: 8px 16px;
             border: none;
@@ -48,12 +48,13 @@ def red_button(label, key=None):
             font-size: 16px;
             cursor: pointer;
             text-align: center;
+            display: inline-block;
         }}
-        .red-button:hover {{
-            background-color: #FF4500;
+        .styled-button:hover {{
+            background-color: darken({color}, 10%);
         }}
         </style>
-        <div class="red-button" onclick="window.location.reload();">{label}</div>
+        <div class="styled-button" onclick="window.location.reload();">{label}</div>
     """, unsafe_allow_html=True)
 
 # Homepage with title, prompt, and buttons to navigate to main features
@@ -99,8 +100,17 @@ if st.session_state.page == "Healthy Eating":
         }
         st.write(goal_blurb[st.session_state.eating_goal])
 
-        # Macronutrient Calculator prompt
-        st.write("Once you have your macronutrients from the [Macro Calculator](https://www.calculator.net/macro-calculator.html), explore the daily menu to find food options that align with your intake goals.")
+        # Macronutrient Calculator Prompt
+        st.write("Once you have your macronutrients from the calculator, explore the daily menu to find food options that align with your intake goals.")
+
+        # Attempt to embed calculator if supported
+        st.subheader("Macronutrient Calculator")
+        try:
+            st.components.v1.iframe("https://www.calculator.net/macro-calculator.html", height=600)
+        except:
+            st.write("Please use the [Macro Calculator](https://www.calculator.net/macro-calculator.html) to determine your intake goals.")
+
+        # Link to Dining Options on Campus
         if st.button("View Dining Options on Campus"):
             st.write("Explore today's meals at [Bentley Dining Services](https://bentley.sodexomyway.com/en-us/locations/the-921).")
 
@@ -110,15 +120,71 @@ if st.session_state.page == "Healthy Eating":
             response = get_chatgpt_response(user_input_eating)
             st.write(response)
 
-    # Navigation Buttons
-    st.write("")  # Add space
-    if "eating_goal" not in st.session_state or st.button("Back to Homepage", key="homepage_eating"):
-        red_button("Back to Homepage")
-    else:
-        red_button("Back")
+    # Final Navigation Button
+    if "eating_goal" in st.session_state:
+        styled_button("Return to Homepage", "#007bff")  # Blue color
 
 # ---------------------- Healthy Lifestyle Section ----------------------
 if st.session_state.page == "Healthy Lifestyle":
     st.header("Healthy Lifestyle")
     st.write("Staying active is a great way to support both mental and physical well-being. Let’s find activities that fit your lifestyle goals.")
 
+    # Display goal buttons for Healthy Lifestyle
+    if "lifestyle_goal" not in st.session_state:
+        if st.button("Support my fitness and energy"):
+            st.session_state.lifestyle_goal = "Fitness and Energy"
+        elif st.button("Have fun and stay active"):
+            st.session_state.lifestyle_goal = "Fun and Active"
+        elif st.button("Try something new"):
+            st.session_state.lifestyle_goal = "Try New"
+        elif st.button("Build strength and endurance"):
+            st.session_state.lifestyle_goal = "Strength and Endurance"
+
+    # Display information based on selected activity goal
+    if "lifestyle_goal" in st.session_state:
+        activity_blurb = {
+            "Fitness and Energy": "Engaging in cardio activities such as jogging, swimming, or brisk walking supports cardiovascular health and energy levels.",
+            "Fun and Active": "Enjoy activities like joining an intramural team or spending time in outdoor spaces for a fun approach to fitness.",
+            "Try New": "Explore new exercises like yoga or bodyweight training for a fresh approach to movement.",
+            "Strength and Endurance": "Focus on strength-building exercises like weight training and calisthenics to build endurance and resilience."
+        }
+        st.write(activity_blurb[st.session_state.lifestyle_goal])
+
+        # Special case for "Try New" with Yoga Video
+        if st.session_state.lifestyle_goal == "Try New":
+            st.write("Try a guided yoga session to add variety to your routine.")
+            st.video("https://www.youtube.com/watch?v=EvMTrP8eRvM&pp=ygULR3VpZGVkIHlvZ2E%3D")
+
+        # Select activity level for workout plan generation
+        activity_level = st.selectbox("Choose your activity level:", ["Beginner", "Intermediate", "Advanced"])
+        if st.button("Generate Workout Plan"):
+            workout_prompt = f"Create a {activity_level.lower()} workout plan focused on {st.session_state.lifestyle_goal.lower()}."
+            workout_plan = get_chatgpt_response(workout_prompt)
+            st.write(workout_plan)
+
+        # ChatGPT for additional fitness questions
+        user_input_lifestyle = st.text_input("Have a question about fitness or staying active?")
+        if user_input_lifestyle:
+            response = get_chatgpt_response(user_input_lifestyle)
+            st.write(response)
+
+    # Final Navigation Button
+    if "lifestyle_goal" in st.session_state:
+        styled_button("Return to Homepage", "#007bff")  # Blue color
+
+# ---------------------- Healthy Mindsets Section ----------------------
+if st.session_state.page == "Healthy Mindsets":
+    st.header("Healthy Mindsets")
+    st.write("Mental well-being is essential. Explore these resources to support calmness, focus, and a positive outlook.")
+
+    # Display buttons for mental wellness activity
+    if "mindset_activity" not in st.session_state:
+        if st.button("Guided relaxation exercise"):
+            st.session_state.mindset_activity = "Relaxation"
+        elif st.button("Breathing techniques"):
+            st.session_state.mindset_activity = "Breathing"
+        elif st.button("Self-reflection and gratitude"):
+            st.session_state.mindset_activity = "Self-Reflection"
+
+    # Display information based on selected activity
+    if "mindset_activity" in
