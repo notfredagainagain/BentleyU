@@ -76,27 +76,25 @@ if st.session_state.page == "Healthy Lifestyle":
         "Get Active": "Engage in leisurely, low-intensity activities like walking or yoga to gently improve fitness at your own pace."
     }
 
+    # CSS styling for uniform button width
+    button_css = """
+    <style>
+    div.stButton > button {
+        width: 200px;
+        margin: 0 auto;
+        display: block;
+    }
+    </style>
+    """
+    st.markdown(button_css, unsafe_allow_html=True)
+
     # Display buttons and descriptions if no goal is selected yet
     if not st.session_state.lifestyle_goal:
         st.write("**Choose Your Goal:**")
-        # Set a uniform button width
-        button_width = "200px"
         for goal, description in goal_options.items():
             col1, col2 = st.columns([1, 4])
             with col1:
-                button = st.button(goal, key=goal, help=description)
-                st.markdown(
-                    f"""
-                    <style>
-                    div.stButton > button:first-child {{
-                        width: {button_width};
-                        text-align: center;
-                    }}
-                    </style>
-                    """, 
-                    unsafe_allow_html=True
-                )
-                if button:
+                if st.button(goal):
                     st.session_state.lifestyle_goal = goal
             with col2:
                 st.write(description)
