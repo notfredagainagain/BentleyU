@@ -193,6 +193,15 @@ if st.session_state.page == "Healthy Lifestyle":
                 "resource": f"[Dana Center](https://events.bentley.edu/dana_center_331)",
                 "location": "Lower Campus",
                 "hours": """
+                Fitness Center:
+                - Monday: 7am - 11pm
+                - Tuesday: 7am - 11pm
+                - Wednesday: 7am - 11pm
+                - Thursday: 7am - 11pm
+                - Friday: 7am - 7pm
+                - Saturday: 9am - 7pm
+                - Sunday: 9am - 11pm
+
                 Pool:
                 - Monday & Wednesday: 7am-9am, 11am-1pm, 8:15pm-10:15pm
                 - Tuesday & Thursday: 11am-1pm, 8:15pm-10:15pm
