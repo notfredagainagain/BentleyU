@@ -68,31 +68,20 @@ if st.session_state.page == "Healthy Lifestyle":
     st.header("Healthy Lifestyle")
     st.write("Staying active is a great way to support both mental and physical well-being. Let’s find activities that fit your lifestyle goals.")
 
-    # Define goal options with shorter descriptions
+    # Define goal options with descriptions
     goal_options = {
-        "Build Strength": "          Improve muscle strength with weightlifting or bodyweight exercises.",
-        "Increase Endurance": "          Try cardio exercises to boost stamina and heart health.",
-        "Just Getting Started": "          Explore light activities in strength, endurance, and group sports.",
-        "Join a Team or Group Activity": "          Join a team or group sport for a fun social workout.",
-        "Get Active": "          Engage in various physical activities, from weights to sports to swimming."
+        "Build Strength": "Increase your muscle strength and endurance through weightlifting or bodyweight exercises.",
+        "Increase Endurance": "Focus on cardio activities to improve stamina and overall cardiovascular health.",
+        "Just Getting Started": "New to exercise? Start with a variety of light activities across strength, endurance, and fun group sports.",
+        "Join a Team or Group Activity": "Looking for a social workout? Join a team or group sport for a fun, interactive way to stay active.",
+        "Get Active": "Engage in leisurely, low-intensity activities like walking, yoga, or swimming to gently improve fitness at your own pace."
     }
 
-    # CSS styling for uniform button width and left alignment
-    button_css = """
-    <style>
-    div.stButton > button {
-        width: 180px;
-        text-align: center;
-    }
-    </style>
-    """
-    st.markdown(button_css, unsafe_allow_html=True)
-
-    # Display buttons and descriptions with more spacing if no goal is selected yet
+    # Display buttons and descriptions with dynamic sizing
     if not st.session_state.lifestyle_goal:
         st.write("**Choose Your Goal:**")
         for goal, description in goal_options.items():
-            col1, col2 = st.columns([1, 6])  # Increase spacing by using a larger ratio
+            col1, col2 = st.columns([1, 6])  # Adjust spacing to position descriptions correctly
             with col1:
                 if st.button(goal):
                     st.session_state.lifestyle_goal = goal
@@ -201,8 +190,10 @@ if st.session_state.page == "Healthy Lifestyle":
 
         # Generate a workout plan or Learn More button based on goal
         if goal == "Join a Team or Group Activity":
-            if st.button("Learn More"):
-                st.write(f"[Learn more about intramural sports]({resource_info['learn_more_url']})")
+            st.markdown(
+                f'<a href="{resource_info["learn_more_url"]}" target="_blank"><button>Learn More</button></a>',
+                unsafe_allow_html=True
+            )
         else:
             if st.button("Generate a Workout Plan"):
                 workout_plan = get_chatgpt_response(resource_info["prompt"], max_tokens=75)
