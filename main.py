@@ -68,22 +68,21 @@ if st.session_state.page == "Healthy Lifestyle":
     st.header("Healthy Lifestyle")
     st.write("Staying active is a great way to support both mental and physical well-being. Let’s find activities that fit your lifestyle goals.")
 
-    # Define goal options with descriptions
+    # Define goal options with shorter descriptions
     goal_options = {
-        "Build Strength": "Increase your muscle strength and endurance through weightlifting or bodyweight exercises.",
-        "Increase Endurance": "Focus on cardio activities to improve stamina and overall cardiovascular health.",
-        "Just Getting Started": "New to exercise? Start with a variety of light activities across strength, endurance, and fun group sports.",
-        "Join a Team or Group Activity": "Looking for a social workout? Join a team or group sport for a fun, interactive way to stay active.",
-        "Get Active": "Engage in leisurely, low-intensity activities like walking or yoga to gently improve fitness at your own pace."
+        "Build Strength": "Improve muscle strength with weightlifting or bodyweight exercises.",
+        "Increase Endurance": "Try cardio exercises to boost stamina and heart health.",
+        "Just Getting Started": "Explore light activities in strength, endurance, and group sports.",
+        "Join a Team or Group Activity": "Join a team or group sport for a fun social workout.",
+        "Get Active": "Engage in low-intensity activities like walking or yoga."
     }
 
-    # CSS styling for uniform button width
+    # CSS styling for uniform button width and left alignment
     button_css = """
     <style>
     div.stButton > button {
-        width: 200px;
-        margin: 0 auto;
-        display: block;
+        width: 180px;
+        text-align: left;
     }
     </style>
     """
