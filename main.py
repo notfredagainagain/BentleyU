@@ -56,8 +56,8 @@ if st.session_state.page == "Healthy Eating":
     st.header("Healthy Eating")
     st.write("Let's calculate your macronutrient needs to support your health goals.")
     
-    # Embed the macronutrient calculator with height 800
-    st.components.v1.iframe("https://www.calculator.net/macro-calculator.html", height=800, width=700)
+    # Embed the macronutrient calculator with height 780
+    st.components.v1.iframe("https://www.calculator.net/macro-calculator.html", height=780, width=700)
 
     # Return to Homepage button
     if st.button("Back to Homepage"):
@@ -124,6 +124,13 @@ if st.session_state.page == "Healthy Lifestyle":
                 - Friday: 7am - 7pm
                 - Saturday: 9am - 7pm
                 - Sunday: 9am - 11pm
+
+                Pool:
+                - Monday & Wednesday: 7am-9am, 11am-1pm, 8:15pm-10:15pm
+                - Tuesday & Thursday: 11am-1pm, 8:15pm-10:15pm
+                - Friday: 7am-9am, 11am-1pm
+                - Saturday: 12pm - 3pm
+                - Sunday: 12pm - 4pm
                 """,
                 "suggestion": "Endurance training helps build stamina. Consider trying these cardio-focused exercises:",
                 "options": ["Running on treadmill", "Cycling", "Stair climbing", "Swimming"],
