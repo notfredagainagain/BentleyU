@@ -82,17 +82,17 @@ if st.session_state.page == "Healthy Lifestyle":
     <style>
     div.stButton > button {
         width: 180px;
-        text-align: left;
+        text-align: center;
     }
     </style>
     """
     st.markdown(button_css, unsafe_allow_html=True)
 
-    # Display buttons and descriptions if no goal is selected yet
+    # Display buttons and descriptions with more spacing if no goal is selected yet
     if not st.session_state.lifestyle_goal:
         st.write("**Choose Your Goal:**")
         for goal, description in goal_options.items():
-            col1, col2 = st.columns([1, 4])
+            col1, col2 = st.columns([1, 6])  # Increase spacing by using a larger ratio
             with col1:
                 if st.button(goal):
                     st.session_state.lifestyle_goal = goal
@@ -107,48 +107,53 @@ if st.session_state.page == "Healthy Lifestyle":
         # Define resources and suggestions based on the selected goal
         resources_suggestions = {
             "Build Strength": {
-                "resource": f"[Dana Center Fitness Center](https://events.bentley.edu/dana_center_331)",
+                "resource": f"[Dana Center](https://events.bentley.edu/dana_center_331)",
                 "location": "Lower Campus",
                 "hours": """
-                Sunday: 9am - 11pm
-                Monday: 7am - 11pm
-                Tuesday: 7am - 11pm
-                Wednesday: 7am - 11pm
-                Thursday: 7am - 11pm
-                Friday: 7am - 7pm
-                Saturday: 9am - 7pm
+                Fitness Center:
+                - Monday: 7am - 11pm
+                - Tuesday: 7am - 11pm
+                - Wednesday: 7am - 11pm
+                - Thursday: 7am - 11pm
+                - Friday: 7am - 7pm
+                - Saturday: 9am - 7pm
+                - Sunday: 9am - 11pm
                 """,
                 "suggestion": "Building strength involves exercises focused on muscle endurance and power. Here are some activities to try:",
                 "options": ["Weightlifting", "Push-ups", "Squats", "Deadlifts"],
                 "prompt": "Create a workout plan for strength training using both weights and bodyweight exercises."
             },
             "Increase Endurance": {
-                "resource": f"[Dana Center Fitness Center - Cardio Section](https://events.bentley.edu/dana_center_331)",
+                "resource": f"[Dana Center](https://events.bentley.edu/dana_center_331)",
                 "location": "Lower Campus",
                 "hours": """
-                Sunday: 9am - 11pm
-                Monday: 7am - 11pm
-                Tuesday: 7am - 11pm
-                Wednesday: 7am - 11pm
-                Thursday: 7am - 11pm
-                Friday: 7am - 7pm
-                Saturday: 9am - 7pm
+                Fitness Center:
+                - Monday: 7am - 11pm
+                - Tuesday: 7am - 11pm
+                - Wednesday: 7am - 11pm
+                - Thursday: 7am - 11pm
+                - Friday: 7am - 7pm
+                - Saturday: 9am - 7pm
+                - Sunday: 9am - 11pm
                 """,
                 "suggestion": "Endurance training helps build stamina. Consider trying these cardio-focused exercises:",
                 "options": ["Running on treadmill", "Cycling", "Stair climbing", "Swimming"],
                 "prompt": "Create a cardio workout plan focused on building endurance."
             },
             "Just Getting Started": {
-                "resource": f"[Dana Center Fitness Center](https://events.bentley.edu/dana_center_331) & Campus Facilities",
+                "resource": f"[Dana Center](https://events.bentley.edu/dana_center_331)",
                 "location": "Lower Campus",
                 "hours": """
-                Fitness Center Hours:
-                - Sunday: 9am - 11pm
-                - Monday - Thursday: 7am - 11pm
+                Fitness Center:
+                - Monday: 7am - 11pm
+                - Tuesday: 7am - 11pm
+                - Wednesday: 7am - 11pm
+                - Thursday: 7am - 11pm
                 - Friday: 7am - 7pm
                 - Saturday: 9am - 7pm
+                - Sunday: 9am - 11pm
 
-                Pool Hours:
+                Pool:
                 - Monday & Wednesday: 7am-9am, 11am-1pm, 8:15pm-10:15pm
                 - Tuesday & Thursday: 11am-1pm, 8:15pm-10:15pm
                 - Friday: 7am-9am, 11am-1pm
@@ -168,17 +173,17 @@ if st.session_state.page == "Healthy Lifestyle":
                 "prompt": "List team sports or group activities that promote social interaction and fitness."
             },
             "Get Active": {
-                "resource": f"[Dana Center Pool](https://events.bentley.edu/dana_center_pool_996) and Green Spaces",
+                "resource": f"[Dana Center](https://events.bentley.edu/dana_center_331)",
                 "location": "Lower Campus",
                 "hours": """
-                Pool Hours:
+                Pool:
                 - Monday & Wednesday: 7am-9am, 11am-1pm, 8:15pm-10:15pm
                 - Tuesday & Thursday: 11am-1pm, 8:15pm-10:15pm
                 - Friday: 7am-9am, 11am-1pm
                 - Saturday: 12pm - 3pm
                 - Sunday: 12pm - 4pm
                 """,
-                "suggestion": "Low-intensity activities are a great way to stay active without overexertion. Try these:",
+                "suggestion": "Low-intensity activities are a great way to stay active without overexertion.",
                 "options": ["Walking", "Yoga", "Swimming", "Stretching"],
                 "prompt": "Suggest low-intensity, leisurely activities to help someone get active."
             }
@@ -186,13 +191,13 @@ if st.session_state.page == "Healthy Lifestyle":
 
         # Display resource details, suggestion, and options
         resource_info = resources_suggestions[goal]
-        st.subheader(f"Resource: {resource_info['resource']}")
+        st.subheader(f"{resource_info['resource']}")
         st.write(f"**Location**: {resource_info['location']}")
         st.write("**Hours:**")
         st.write(resource_info['hours'])
         st.write(resource_info["suggestion"])
         st.write("**Activities to Try:**")
-        st.write(", ".join(resource_info["options"]))
+        st.write("- " + "\n- ".join(resource_info["options"]))
 
         # Generate a workout plan based on user goal and resource
         if st.button("Generate a Workout Plan"):
