@@ -31,6 +31,7 @@ def return_to_homepage():
     for key in list(st.session_state.keys()):
         del st.session_state[key]
     st.session_state.page = "home"
+    st.session_state.lifestyle_goal = None
 
 # Define a back button function to go to the previous page
 def go_back():
@@ -110,15 +111,13 @@ if st.session_state.page == "Healthy Lifestyle":
                 "resource": f"[Dana Center Fitness Center](https://events.bentley.edu/dana_center_331)",
                 "location": "Lower Campus",
                 "hours": """
-                | Day       | Time              |
-                |-----------|-------------------|
-                | Sunday    | 9am - 11pm       |
-                | Monday    | 7am - 11pm       |
-                | Tuesday   | 7am - 11pm       |
-                | Wednesday | 7am - 11pm       |
-                | Thursday  | 7am - 11pm       |
-                | Friday    | 7am - 7pm        |
-                | Saturday  | 9am - 7pm        |
+                Sunday: 9am - 11pm
+                Monday: 7am - 11pm
+                Tuesday: 7am - 11pm
+                Wednesday: 7am - 11pm
+                Thursday: 7am - 11pm
+                Friday: 7am - 7pm
+                Saturday: 9am - 7pm
                 """,
                 "suggestion": "Building strength involves exercises focused on muscle endurance and power. Here are some activities to try:",
                 "options": ["Weightlifting", "Push-ups", "Squats", "Deadlifts"],
@@ -128,15 +127,13 @@ if st.session_state.page == "Healthy Lifestyle":
                 "resource": f"[Dana Center Fitness Center - Cardio Section](https://events.bentley.edu/dana_center_331)",
                 "location": "Lower Campus",
                 "hours": """
-                | Day       | Time              |
-                |-----------|-------------------|
-                | Sunday    | 9am - 11pm       |
-                | Monday    | 7am - 11pm       |
-                | Tuesday   | 7am - 11pm       |
-                | Wednesday | 7am - 11pm       |
-                | Thursday  | 7am - 11pm       |
-                | Friday    | 7am - 7pm        |
-                | Saturday  | 9am - 7pm        |
+                Sunday: 9am - 11pm
+                Monday: 7am - 11pm
+                Tuesday: 7am - 11pm
+                Wednesday: 7am - 11pm
+                Thursday: 7am - 11pm
+                Friday: 7am - 7pm
+                Saturday: 9am - 7pm
                 """,
                 "suggestion": "Endurance training helps build stamina. Consider trying these cardio-focused exercises:",
                 "options": ["Running on treadmill", "Cycling", "Stair climbing", "Swimming"],
@@ -146,42 +143,41 @@ if st.session_state.page == "Healthy Lifestyle":
                 "resource": f"[Dana Center Fitness Center](https://events.bentley.edu/dana_center_331) & Campus Facilities",
                 "location": "Lower Campus",
                 "hours": """
-                | Facility           | Day          | Time                  |
-                |--------------------|--------------|-----------------------|
-                | Fitness Center     | See Above    |                       |
-                | Pool               | Monday       | 7am-9am, 11am-1pm, 8:15pm-10:15pm |
-                |                    | Tuesday      | 11am-1pm, 8:15pm-10:15pm |
-                |                    | Wednesday    | 7am-9am, 11am-1pm, 8:15pm-10:15pm |
-                |                    | Thursday     | 11am-1pm, 8:15pm-10:15pm |
-                |                    | Friday       | 7am-9am, 11am-1pm    |
-                |                    | Saturday     | 12pm - 3pm           |
-                |                    | Sunday       | 12pm - 4pm           |
+                Fitness Center Hours:
+                - Sunday: 9am - 11pm
+                - Monday - Thursday: 7am - 11pm
+                - Friday: 7am - 7pm
+                - Saturday: 9am - 7pm
+
+                Pool Hours:
+                - Monday & Wednesday: 7am-9am, 11am-1pm, 8:15pm-10:15pm
+                - Tuesday & Thursday: 11am-1pm, 8:15pm-10:15pm
+                - Friday: 7am-9am, 11am-1pm
+                - Saturday: 12pm - 3pm
+                - Sunday: 12pm - 4pm
                 """,
                 "suggestion": "If you're new to exercise, try these beginner-friendly activities to get started:",
                 "options": ["Light cardio", "Bodyweight exercises", "Stretching", "Group sports"],
                 "prompt": "Suggest beginner-friendly workouts for strength, endurance, and team-based activities."
             },
             "Join a Team or Group Activity": {
-                "resource": "Intramural and Club Sports",
+                "resource": "[Intramural and Club Sports](https://bentley.dserec.com/online/intramurals_widget)",
                 "location": "Varies by sport",
-                "hours": "Varies by sport",
-                "suggestion": "Joining a group activity can make exercise fun and social. Some options include:",
-                "options": ["Basketball", "Soccer", "Volleyball", "Hiking clubs"],
+                "hours": "Check the schedule on the linked page.",
+                "suggestion": "Joining a group activity can make exercise fun and social. Current offerings include:",
+                "options": ["Co-ed & Men's Soccer", "Flag Football", "Ultimate Frisbee", "Men's and Women's Basketball", "Co-ed Volleyball", "Recreational Events"],
                 "prompt": "List team sports or group activities that promote social interaction and fitness."
             },
             "Get Active": {
                 "resource": f"[Dana Center Pool](https://events.bentley.edu/dana_center_pool_996) and Green Spaces",
                 "location": "Lower Campus",
                 "hours": """
-                | Day       | Time                  |
-                |-----------|----------------------|
-                | Monday    | 7am-9am, 11am-1pm, 8:15pm-10:15pm |
-                | Tuesday   | 11am-1pm, 8:15pm-10:15pm |
-                | Wednesday | 7am-9am, 11am-1pm, 8:15pm-10:15pm |
-                | Thursday  | 11am-1pm, 8:15pm-10:15pm |
-                | Friday    | 7am-9am, 11am-1pm    |
-                | Saturday  | 12pm - 3pm           |
-                | Sunday    | 12pm - 4pm           |
+                Pool Hours:
+                - Monday & Wednesday: 7am-9am, 11am-1pm, 8:15pm-10:15pm
+                - Tuesday & Thursday: 11am-1pm, 8:15pm-10:15pm
+                - Friday: 7am-9am, 11am-1pm
+                - Saturday: 12pm - 3pm
+                - Sunday: 12pm - 4pm
                 """,
                 "suggestion": "Low-intensity activities are a great way to stay active without overexertion. Try these:",
                 "options": ["Walking", "Yoga", "Swimming", "Stretching"],
@@ -193,7 +189,8 @@ if st.session_state.page == "Healthy Lifestyle":
         resource_info = resources_suggestions[goal]
         st.subheader(f"Resource: {resource_info['resource']}")
         st.write(f"**Location**: {resource_info['location']}")
-        st.write(f"**Hours**:\n{resource_info['hours']}")
+        st.write("**Hours:**")
+        st.write(resource_info['hours'])
         st.write(resource_info["suggestion"])
         st.write("**Activities to Try:**")
         st.write(", ".join(resource_info["options"]))
@@ -214,6 +211,5 @@ if st.session_state.page == "Healthy Lifestyle":
             go_back()
 
         # Option to return to the homepage
-        st.write("")  # Add space
         if st.button("Back to Homepage", key="return_home_lifestyle"):
             return_to_homepage()
