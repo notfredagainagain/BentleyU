@@ -70,11 +70,11 @@ if st.session_state.page == "Healthy Lifestyle":
 
     # Define goal options with shorter descriptions
     goal_options = {
-        "Build Strength": "Improve muscle strength with weightlifting or bodyweight exercises.",
-        "Increase Endurance": "Try cardio exercises to boost stamina and heart health.",
-        "Just Getting Started": "Explore light activities in strength, endurance, and group sports.",
-        "Join a Team or Group Activity": "Join a team or group sport for a fun social workout.",
-        "Get Active": "Engage in low-intensity activities like walking or yoga."
+        "Build Strength": "          Improve muscle strength with weightlifting or bodyweight exercises.",
+        "Increase Endurance": "          Try cardio exercises to boost stamina and heart health.",
+        "Just Getting Started": "          Explore light activities in strength, endurance, and group sports.",
+        "Join a Team or Group Activity": "          Join a team or group sport for a fun social workout.",
+        "Get Active": "          Engage in various physical activities, from weights to sports to swimming."
     }
 
     # CSS styling for uniform button width and left alignment
@@ -161,16 +161,16 @@ if st.session_state.page == "Healthy Lifestyle":
                 - Sunday: 12pm - 4pm
                 """,
                 "suggestion": "If you're new to exercise, try these beginner-friendly activities to get started:",
-                "options": ["Light cardio", "Bodyweight exercises", "Stretching", "Group sports"],
+                "options": ["Light cardio", "Bodyweight exercises", "Stretching", "Swimming", "Group sports"],
                 "prompt": "Suggest beginner-friendly workouts for strength, endurance, and team-based activities."
             },
             "Join a Team or Group Activity": {
-                "resource": "[Intramural and Club Sports](https://bentley.dserec.com/online/intramurals_widget)",
-                "location": "Varies by sport",
-                "hours": "Check the schedule on the linked page.",
+                "resource": "Dana Center",
+                "location": "Lower Campus",
+                "hours": "Check the schedule for intramural activities.",
                 "suggestion": "Joining a group activity can make exercise fun and social. Current offerings include:",
                 "options": ["Co-ed & Men's Soccer", "Flag Football", "Ultimate Frisbee", "Men's and Women's Basketball", "Co-ed Volleyball", "Recreational Events"],
-                "prompt": "List team sports or group activities that promote social interaction and fitness."
+                "learn_more_url": "https://bentley.dserec.com/online/intramurals_widget"
             },
             "Get Active": {
                 "resource": f"[Dana Center](https://events.bentley.edu/dana_center_331)",
@@ -183,8 +183,8 @@ if st.session_state.page == "Healthy Lifestyle":
                 - Saturday: 12pm - 3pm
                 - Sunday: 12pm - 4pm
                 """,
-                "suggestion": "Low-intensity activities are a great way to stay active without overexertion.",
-                "options": ["Walking", "Yoga", "Swimming", "Stretching"],
+                "suggestion": "Engage in a variety of physical activities, from swimming to team sports to light cardio.",
+                "options": ["Walking", "Yoga", "Swimming", "Stretching", "Cycling"],
                 "prompt": "Suggest low-intensity, leisurely activities to help someone get active."
             }
         }
@@ -199,10 +199,14 @@ if st.session_state.page == "Healthy Lifestyle":
         st.write("**Activities to Try:**")
         st.write("- " + "\n- ".join(resource_info["options"]))
 
-        # Generate a workout plan based on user goal and resource
-        if st.button("Generate a Workout Plan"):
-            workout_plan = get_chatgpt_response(resource_info["prompt"], max_tokens=75)
-            st.write(workout_plan)
+        # Generate a workout plan or Learn More button based on goal
+        if goal == "Join a Team or Group Activity":
+            if st.button("Learn More"):
+                st.write(f"[Learn more about intramural sports]({resource_info['learn_more_url']})")
+        else:
+            if st.button("Generate a Workout Plan"):
+                workout_plan = get_chatgpt_response(resource_info["prompt"], max_tokens=75)
+                st.write(workout_plan)
 
         # ChatGPT for additional fitness questions
         user_input_lifestyle = st.text_input("Have a question about fitness or staying active?")
