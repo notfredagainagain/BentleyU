@@ -20,44 +20,65 @@ def get_chatgpt_response(user_input, max_tokens=50):
     except Exception as e:
         return f"There was an error retrieving the response: {e}"
 
-# Initialize session state to track the selected page and sub-steps
+# Initialize session state for navigation and selections
 if "page" not in st.session_state:
     st.session_state.page = "home"
 if "lifestyle_goal" not in st.session_state:
     st.session_state.lifestyle_goal = None
 
-# Define a function to reset the session state and navigate to the homepage
-def return_to_homepage():
-    for key in list(st.session_state.keys()):
-        del st.session_state[key]
-    st.session_state.page = "home"
+# Define a function to set page and reset selections
+def set_page(page):
+    st.session_state.page = page
     st.session_state.lifestyle_goal = None
 
-# Define a back button function to go to the previous page
+# Define a function to return to the homepage
+def return_to_homepage():
+    set_page("home")
+
+# Define function to navigate back within Healthy Lifestyle section
 def go_back():
     st.session_state.lifestyle_goal = None
 
-# Homepage with title, prompt, and buttons to navigate to main features
+# Home page with options to navigate to main features
 if st.session_state.page == "home":
     st.title("WellNest")
     st.subheader("Welcome!")
     st.write("Select a wellness area to get started:")
 
-    # Navigation buttons with session state updates
-    if st.button("Healthy Eating"):
-        st.session_state.page = "Healthy Eating"
-    elif st.button("Healthy Lifestyle"):
-        st.session_state.page = "Healthy Lifestyle"
-    elif st.button("Healthy Mindsets"):
-        st.session_state.page = "Healthy Mindsets"
+    # Navigation buttons
+    if st.button("Healthy Eating", on_click=set_page, args=("Healthy Eating",)):
+        pass
+    if st.button("Healthy Lifestyle", on_click=set_page, args=("Healthy Lifestyle",)):
+        pass
+    if st.button("Healthy Mindsets", on_click=set_page, args=("Healthy Mindsets",)):
+        pass
 
 # ---------------------- Healthy Eating Section ----------------------
 if st.session_state.page == "Healthy Eating":
     st.header("Healthy Eating")
-    st.write("Let's calculate your macronutrient needs to support your health goals.")
-    
+    st.write("Healthy eating is a foundation for wellness. Here are some resources to help you make informed nutritional choices based on your goals.")
+
+    # Prompt user to select a goal for personalized recommendations
+    st.subheader("What's Your Nutrition Goal?")
+    nutrition_goal = st.selectbox("Choose your goal:", ["Select a goal", "Gain Muscle", "Lose Weight", "Maintain Weight", "Be Mindful of Diet"])
+
+    # Provide goal-specific information
+    if nutrition_goal != "Select a goal":
+        st.write(f"### Goal: {nutrition_goal}")
+        goal_info = {
+            "Gain Muscle": "Increasing protein intake supports muscle recovery and growth. Consistency in diet and strength training is key!",
+            "Lose Weight": "Focusing on a calorie deficit along with balanced macronutrients can aid in fat loss while preserving muscle.",
+            "Maintain Weight": "Eating a balanced mix of macronutrients supports steady energy and optimal body function.",
+            "Be Mindful of Diet": "Choosing nutrient-dense foods promotes overall wellness and helps you meet your daily nutrition needs."
+        }
+        st.write(goal_info[nutrition_goal])
+
     # Embed the macronutrient calculator with height 780
+    st.write("Use the macronutrient calculator below to calculate your specific macronutrient needs based on height, weight, and activity level.")
     st.components.v1.iframe("https://www.calculator.net/macro-calculator.html", height=780, width=700)
+
+    # Link to campus dining options
+    st.write("Once you know your macronutrient needs, check out [Bentley University Dining Services](https://bentley.sodexomyway.com/en-us/locations/the-921) for menu options that align with your goals.")
 
     # Return to Homepage button
     if st.button("Back to Homepage"):
@@ -213,8 +234,8 @@ if st.session_state.page == "Healthy Lifestyle":
             st.write(response)
 
         # Back button to reset the goal selection
-        if st.button("Back"):
-            go_back()
+        if st.button("Back", on_click=go_back):
+            pass
 
         # Option to return to the homepage
         if st.button("Back to Homepage", key="return_home_lifestyle"):
