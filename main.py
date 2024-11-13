@@ -240,3 +240,21 @@ if st.session_state.page == "Healthy Lifestyle":
         # Option to return to the homepage
         if st.button("Back to Homepage", key="return_home_lifestyle"):
             return_to_homepage()
+
+# ---------------------- Healthy Mindsets Section ----------------------
+if st.session_state.page == "Healthy Mindsets":
+    st.header("Healthy Mindsets")
+    st.write("A healthy mind is essential for overall well-being. Explore resources that can help you manage stress, relax, and focus on mental health.")
+
+    # Offer options for guided practices and counseling services
+    st.write("**Guided Practices**")
+    st.video("https://www.youtube.com/watch?v=ZToicYcHIOU", start_time=0)
+    st.video("https://youtu.be/DbDoBzGY3vo?si=xWVePxgCv6NJVhM-", start_time=0)
+    st.video("https://youtu.be/54MvgUqkHlo?si=0XkWqVB56j3du4wB", start_time=0)
+
+    # Counseling center link
+    st.write("If you would like additional support, please consider reaching out to the [Bentley Counseling Center](https://www.bentley.edu/university-life/student-health/counseling-center).")
+
+    # Return to Homepage button
+    if st.button("Back to Homepage"):
+        return_to_homepage()
