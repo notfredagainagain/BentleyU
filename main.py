@@ -23,6 +23,8 @@ def get_chatgpt_response(user_input, max_tokens=50):
 # Initialize session state to track the selected page and sub-steps
 if "page" not in st.session_state:
     st.session_state.page = "home"
+if "lifestyle_goal" not in st.session_state:
+    st.session_state.lifestyle_goal = None
 
 # Define a function to reset the session state and navigate to the homepage
 def return_to_homepage():
@@ -32,9 +34,7 @@ def return_to_homepage():
 
 # Define a back button function to go to the previous page
 def go_back():
-    if "lifestyle_goal" in st.session_state:
-        del st.session_state["lifestyle_goal"]
-    st.session_state.page = "Healthy Lifestyle"
+    st.session_state.lifestyle_goal = None
 
 # Homepage with title, prompt, and buttons to navigate to main features
 if st.session_state.page == "home":
@@ -50,36 +50,45 @@ if st.session_state.page == "home":
     elif st.button("Healthy Mindsets"):
         st.session_state.page = "Healthy Mindsets"
 
+# ---------------------- Healthy Eating Section ----------------------
+if st.session_state.page == "Healthy Eating":
+    st.header("Healthy Eating")
+    st.write("Let's calculate your macronutrient needs to support your health goals.")
+    
+    # Embed the macronutrient calculator
+    st.components.v1.iframe("https://www.calculator.net/macro-calculator.html", height=850, width=700)
+
+    # Return to Homepage button
+    if st.button("Back to Homepage"):
+        return_to_homepage()
+
 # ---------------------- Healthy Lifestyle Section ----------------------
 if st.session_state.page == "Healthy Lifestyle":
     st.header("Healthy Lifestyle")
     st.write("Staying active is a great way to support both mental and physical well-being. Let’s find activities that fit your lifestyle goals.")
 
-    # Display goal options with descriptions to guide users
-    if "lifestyle_goal" not in st.session_state:
+    # Define goal options with descriptions
+    goal_options = {
+        "Build Strength": "Increase your muscle strength and endurance through weightlifting or bodyweight exercises.",
+        "Increase Endurance": "Focus on cardio activities to improve stamina and overall cardiovascular health.",
+        "Just Getting Started": "New to exercise? Start with a variety of light activities across strength, endurance, and fun group sports.",
+        "Join a Team or Group Activity": "Looking for a social workout? Join a team or group sport for a fun, interactive way to stay active.",
+        "Get Active": "Engage in leisurely, low-intensity activities like walking or yoga to gently improve fitness at your own pace."
+    }
+
+    # Display buttons and descriptions if no goal is selected yet
+    if not st.session_state.lifestyle_goal:
         st.write("**Choose Your Goal:**")
-        st.write("1. **Build Strength** - Increase your muscle strength and endurance through weightlifting or bodyweight exercises.")
-        if st.button("Build Strength"):
-            st.session_state.lifestyle_goal = "Build Strength"
-        
-        st.write("2. **Increase Endurance** - Focus on cardio activities to improve stamina and overall cardiovascular health.")
-        if st.button("Increase Endurance"):
-            st.session_state.lifestyle_goal = "Increase Endurance"
-        
-        st.write("3. **Just Getting Started** - New to exercise? Start with a variety of light activities across strength, endurance, and fun group sports.")
-        if st.button("Just Getting Started"):
-            st.session_state.lifestyle_goal = "Just Getting Started"
-        
-        st.write("4. **Join a Team or Group Activity** - Looking for a social workout? Join a team or group sport for a fun, interactive way to stay active.")
-        if st.button("Join a Team or Group Activity"):
-            st.session_state.lifestyle_goal = "Join a Team or Group Activity"
-        
-        st.write("5. **Get Active** - Engage in leisurely, low-intensity activities like walking or yoga to gently improve fitness at your own pace.")
-        if st.button("Get Active"):
-            st.session_state.lifestyle_goal = "Get Active"
+        for goal, description in goal_options.items():
+            col1, col2 = st.columns([1, 4])
+            with col1:
+                if st.button(goal):
+                    st.session_state.lifestyle_goal = goal
+            with col2:
+                st.write(description)
 
     # Provide resources and exercise suggestions based on selected goal
-    if "lifestyle_goal" in st.session_state:
+    if st.session_state.lifestyle_goal:
         goal = st.session_state.lifestyle_goal
         st.write(f"You selected: **{goal}**")
 
@@ -143,9 +152,11 @@ if st.session_state.page == "Healthy Lifestyle":
             response = get_chatgpt_response(user_input_lifestyle, max_tokens=50)
             st.write(response)
 
-        # Navigation buttons
+        # Back button to reset the goal selection
+        if st.button("Back"):
+            go_back()
+
+        # Option to return to the homepage
         st.write("")  # Add space
         if st.button("Back to Homepage", key="return_home_lifestyle"):
             return_to_homepage()
-        elif st.button("Back"):
-            go_back()
