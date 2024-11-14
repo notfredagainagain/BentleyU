@@ -6,8 +6,8 @@ import random
 # Fetch OpenAI API key from environment variables
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# ChatGPT interaction function using ChatCompletion API with token limit
-def get_chatgpt_response(user_input, max_tokens=50):
+# ChatGPT interaction function with increased max_tokens for longer responses
+def get_chatgpt_response(user_input, max_tokens=75):  # Adjusted max_tokens for more comprehensive answers
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -97,6 +97,12 @@ if st.session_state.page == "Healthy Eating":
         unsafe_allow_html=True
     )
 
+    # ChatGPT for additional questions on nutrition
+    user_input_eating = st.text_input("Have a question about nutrition or diet planning?")
+    if user_input_eating:
+        response = get_chatgpt_response(user_input_eating, max_tokens=100)
+        st.write(response)
+
     # Return to Homepage button
     if st.button("Back to Homepage"):
         return_to_homepage()
@@ -151,7 +157,7 @@ if st.session_state.page == "Healthy Lifestyle":
                 "options": ["Weightlifting", "Push-ups", "Squats", "Deadlifts"],
                 "prompt": "Create a workout plan for strength training using both weights and bodyweight exercises."
             },
-            "Increase Endurance": {
+            "Endurance Training": {
                 "resource": f"[Dana Center](https://events.bentley.edu/dana_center_331)",
                 "location": "Lower Campus",
                 "hours": """
@@ -318,6 +324,11 @@ if st.session_state.page == "Healthy Mindsets":
     )
     st.markdown("<br><br>", unsafe_allow_html=True)
 
+    # ChatGPT for additional mental wellness questions
+    user_input_mindset = st.text_input("Have a question about mental wellness?")
+    if user_input_mindset:
+        response = get_chatgpt_response(user_input_mindset, max_tokens=100)
+        st.write(response)
 
     # Return to Homepage button
     if st.button("Back to Homepage"):
