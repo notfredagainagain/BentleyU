@@ -296,7 +296,7 @@ if st.session_state.page == "Healthy Mindsets":
         unsafe_allow_html=True
     )
     st.markdown(
-        "[**Learn more about BetterMynd services**](https://www.bentley.edu/university-life/student-health/counseling-center)",
+        "[**Learn more about Bentley's Counseling Center**](https://www.bentley.edu/university-life/student-health/counseling-center)",
         unsafe_allow_html=True
     )
 
