@@ -1,6 +1,7 @@
 import openai
 import streamlit as st
 import os
+import random
 
 # Fetch OpenAI API key from environment variables
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -253,16 +254,51 @@ if st.session_state.page == "Healthy Lifestyle":
 # ---------------------- Healthy Mindsets Section ----------------------
 if st.session_state.page == "Healthy Mindsets":
     st.header("Healthy Mindsets")
-    st.write("A healthy mind is essential for overall well-being. Explore resources that can help you manage stress, relax, and focus on mental health.")
+    st.write("A healthy mind is essential for overall well-being. Let us help you find resources that match your mood.")
 
-    # Offer options for guided practices and counseling services
-    st.write("**Guided Practices**")
-    st.video("https://www.youtube.com/watch?v=ZToicYcHIOU", start_time=0)
-    st.video("https://youtu.be/DbDoBzGY3vo?si=xWVePxgCv6NJVhM-", start_time=0)
-    st.video("https://youtu.be/54MvgUqkHlo?si=0XkWqVB56j3du4wB", start_time=0)
+    # Mood selection prompt
+    st.subheader("How are you feeling today?")
+    mood_option = st.selectbox(
+        "Describe your current mood to find suitable resources:",
+        ["Select an option", "Feeling Stressed", "Having Trouble Sleeping", "Need to Clear My Mind"]
+    )
 
-    # Counseling center link
-    st.write("If you would like additional support, please consider reaching out to the [Bentley Counseling Center](https://www.bentley.edu/university-life/student-health/counseling-center).")
+    # Define categorized YouTube links
+    video_links = {
+        "Need to Clear My Mind": [
+            "https://www.youtube.com/watch?v=tqhxMUm7XXU",
+            "https://www.youtube.com/watch?v=QHkXvPq2pQE",
+            "https://www.youtube.com/watch?v=BVZS8XqNyEY"
+        ],
+        "Having Trouble Sleeping": [
+            "https://www.youtube.com/watch?v=g0jfhRcXtLQ",
+            "https://www.youtube.com/watch?v=U6Ay9v7gK9w",
+            "https://www.youtube.com/watch?v=DBhadQTCBeo"
+        ],
+        "Feeling Stressed": [
+            "https://www.youtube.com/watch?v=DbDoBzGY3vo",
+            "https://www.youtube.com/watch?v=LiUnFJ8P4gM",
+            "https://www.youtube.com/watch?v=LU6Oi80n5J4"
+        ]
+    }
+
+    # Display resources based on selected mood
+    if mood_option in video_links:
+        st.write(f"### Suggested {mood_option} Resource:")
+        selected_video = random.choice(video_links[mood_option])
+        st.video(selected_video)
+
+    # Additional university resources for mental health support
+    st.write("### Additional Support Resources")
+    st.write("For personalized support, you can schedule an appointment with our Counseling Center or explore BetterMynd services.")
+    st.markdown(
+        "[**Schedule a Counseling Appointment**](https://www.bentley.edu/university-life/student-health/counseling-center-appointment)",
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        "[**Learn more about BetterMynd services**](https://www.bentley.edu/university-life/student-health/counseling-center)",
+        unsafe_allow_html=True
+    )
 
     # Return to Homepage button
     if st.button("Back to Homepage"):
