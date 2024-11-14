@@ -43,7 +43,7 @@ def go_back():
 # Home page with options to navigate to main features
 if st.session_state.page == "home":
     # Display the logo at the top of the app
-    st.image("logo.png", width=250)  # Adjust the path and width as needed
+    st.image("WellNest_Logo.png", width=250)  # Adjust the path and width as needed
     
     st.subheader("Welcome!")
     st.write("Select a wellness area to get started:")
