@@ -63,15 +63,15 @@ if st.session_state.page == "Healthy Eating":
     st.subheader("What's your Nutrition Goal?")
     nutrition_goal = st.selectbox(
         "Choose your goal to get started:",
-        ["Select a goal", "Gain Muscle", "Lose Weight", "Maintain Weight", "Be Mindful of Diet"]
+        ["Select a goal", "Be Mindful of Diet", "Gain Muscle", "Lose Weight", "Maintain Weight"]
     )
 
     # Define goal-specific information
     goal_info = {
-        "Gain Muscle": "Increasing protein intake supports muscle recovery and growth. Consistency in diet and strength training is key!",
-        "Lose Weight": "Focusing on a calorie deficit along with balanced macronutrients can aid in fat loss while preserving muscle.",
-        "Maintain Weight": "Eating a balanced mix of macronutrients supports steady energy and optimal body function.",
-        "Be Mindful of Diet": "Choosing nutrient-dense foods promotes overall wellness and helps you meet your daily nutrition needs."
+        "Be Mindful of Diet": "Eating mindfully involves paying attention to your body’s hunger and fullness cues and choosing foods that provide nourishment. Focus on whole, unprocessed foods that give you the energy to get through the day. Incorporate a variety of food groups—such as fruits, vegetables, whole grains, and lean proteins—to ensure you're meeting your nutritional needs. Mindful eating can reduce stress, improve digestion, and help you develop a positive relationship with food over time.",
+        "Gain Muscle": "Building muscle requires an increased intake of protein to support muscle recovery and growth. Consuming protein after workouts and spacing it throughout the day aids muscle synthesis. Carbohydrates are also essential to fuel workouts and replenish energy stores, while healthy fats help with hormone production, supporting muscle growth. Focus on nutrient-dense foods that fuel your training and aim for consistent meal timing to optimize your results.",
+        "Lose Weight": "Losing weight involves creating a calorie deficit, meaning you consume fewer calories than you burn. Prioritizing protein can help preserve muscle mass during weight loss, while high-fiber foods like vegetables and whole grains help you feel fuller longer. Choosing complex carbohydrates and healthy fats in moderate amounts will provide steady energy. Consistency in eating balanced meals and avoiding processed foods can make a significant difference in reaching and maintaining your goals.",
+        "Maintain Weight": "Maintaining weight requires a balanced intake of macronutrients to support steady energy levels and overall health. A mix of protein, complex carbohydrates, and healthy fats will help stabilize your blood sugar and prevent energy crashes. Staying mindful of portion sizes and choosing nutrient-dense foods, such as lean proteins, whole grains, and a variety of fruits and vegetables, will support ongoing health and well-being."
     }
 
     # Display resources and suggestions based on selected goal
@@ -79,7 +79,7 @@ if st.session_state.page == "Healthy Eating":
         st.write(f"### Goal: {nutrition_goal}")
         st.write(goal_info[nutrition_goal])
 
-        # Macronutrient calculator
+        # Macronutrient calculator instructions and calculator
         st.write("Use the macronutrient calculator below to calculate your specific macronutrient needs based on height, weight, and activity level.")
         st.components.v1.iframe("https://www.calculator.net/macro-calculator.html", height=780, width=700)
 
