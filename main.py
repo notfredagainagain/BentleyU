@@ -107,14 +107,14 @@ if st.session_state.page == "Healthy Lifestyle":
     st.header("Healthy Lifestyle")
     st.write("Staying active is a great way to support both mental and physical well-being. Let’s find activities that fit your lifestyle goals.")
 
-   # Define goal options with descriptions
-goal_options = {
-    "Build Strength": "Increase your muscle strength and endurance through weightlifting or bodyweight exercises.",
-    "Endurance Training": "Focus on cardio activities to improve stamina and overall cardiovascular health.",
-    "Just Getting Started": "New to exercise? Start with a variety of light activities across strength, endurance, and fun group sports.",
-    "Join a Team or Group Activity": "Looking for a social workout? Join a team or group sport for a fun, interactive way to stay active.",
-    "Get Active": "Engage in leisurely, low-intensity activities like walking, yoga, or swimming to gently improve fitness at your own pace."
-}
+    # Define goal options with descriptions
+    goal_options = {
+        "Build Strength": "Increase your muscle strength and endurance through weightlifting or bodyweight exercises.",
+        "Endurance Training": "Focus on cardio activities to improve stamina and overall cardiovascular health.",
+        "Just Getting Started": "New to exercise? Start with a variety of light activities across strength, endurance, and fun group sports.",
+        "Join a Team or Group Activity": "Looking for a social workout? Join a team or group sport for a fun, interactive way to stay active.",
+        "Get Active": "Engage in leisurely, low-intensity activities like walking, yoga, or swimming to gently improve fitness at your own pace."
+    }
 
     # Display buttons and descriptions with dynamic sizing
     if not st.session_state.lifestyle_goal:
