@@ -57,33 +57,47 @@ if st.session_state.page == "home":
 # ---------------------- Healthy Eating Section ----------------------
 if st.session_state.page == "Healthy Eating":
     st.header("Healthy Eating")
-    st.write("Healthy eating is a foundation for wellness. Here are some resources to help you make informed nutritional choices based on your goals.")
+    st.write("Eating well is essential to achieving wellness goals. Select a nutrition goal below, and we’ll guide you with helpful resources and tools.")
 
-    # Prompt user to select a goal for personalized recommendations
-    st.subheader("What's Your Nutrition Goal?")
-    nutrition_goal = st.selectbox("Choose your goal:", ["Select a goal", "Gain Muscle", "Lose Weight", "Maintain Weight", "Be Mindful of Diet"])
+    # Nutrition goal selection prompt
+    st.subheader("What's your Nutrition Goal?")
+    nutrition_goal = st.selectbox(
+        "Choose your goal to get started:",
+        ["Select a goal", "Gain Muscle", "Lose Weight", "Maintain Weight", "Be Mindful of Diet"]
+    )
 
-    # Provide goal-specific information
-    if nutrition_goal != "Select a goal":
+    # Define goal-specific information
+    goal_info = {
+        "Gain Muscle": "Increasing protein intake supports muscle recovery and growth. Consistency in diet and strength training is key!",
+        "Lose Weight": "Focusing on a calorie deficit along with balanced macronutrients can aid in fat loss while preserving muscle.",
+        "Maintain Weight": "Eating a balanced mix of macronutrients supports steady energy and optimal body function.",
+        "Be Mindful of Diet": "Choosing nutrient-dense foods promotes overall wellness and helps you meet your daily nutrition needs."
+    }
+
+    # Display resources and suggestions based on selected goal
+    if nutrition_goal != "Select a goal" and nutrition_goal in goal_info:
         st.write(f"### Goal: {nutrition_goal}")
-        goal_info = {
-            "Gain Muscle": "Increasing protein intake supports muscle recovery and growth. Consistency in diet and strength training is key!",
-            "Lose Weight": "Focusing on a calorie deficit along with balanced macronutrients can aid in fat loss while preserving muscle.",
-            "Maintain Weight": "Eating a balanced mix of macronutrients supports steady energy and optimal body function.",
-            "Be Mindful of Diet": "Choosing nutrient-dense foods promotes overall wellness and helps you meet your daily nutrition needs."
-        }
         st.write(goal_info[nutrition_goal])
 
-    # Embed the macronutrient calculator with height 780
-    st.write("Use the macronutrient calculator below to calculate your specific macronutrient needs based on height, weight, and activity level.")
-    st.components.v1.iframe("https://www.calculator.net/macro-calculator.html", height=780, width=700)
+        # Macronutrient calculator
+        st.write("Use the macronutrient calculator below to calculate your specific macronutrient needs based on height, weight, and activity level.")
+        st.components.v1.iframe("https://www.calculator.net/macro-calculator.html", height=780, width=700)
 
-    # Link to campus dining options
-    st.write("Once you know your macronutrient needs, check out [Bentley University Dining Services](https://bentley.sodexomyway.com/en-us/locations/the-921) for menu options that align with your goals.")
+        # Link to campus dining services
+        st.write("Once you have your macronutrient needs, explore the [Bentley University Dining Services](https://bentley.sodexomyway.com/en-us/locations/the-921) to find meals that fit your goals.")
+
+    # Additional campus resources
+    st.write("### Additional Nutrition Support")
+    st.write("For personalized dietary advice, consider scheduling a session with our on-campus dietitian.")
+    st.markdown(
+        "[**Book a Session with the Dietitian**](https://outlook.office365.com/book/HayleyRuffRDLDN@sodexo.onmicrosoft.com/)",
+        unsafe_allow_html=True
+    )
 
     # Return to Homepage button
     if st.button("Back to Homepage"):
         return_to_homepage()
+
 
 # ---------------------- Healthy Lifestyle Section ----------------------
 if st.session_state.page == "Healthy Lifestyle":
