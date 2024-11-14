@@ -299,6 +299,7 @@ if st.session_state.page == "Healthy Mindsets":
         "[**Learn more about Bentley's Counseling Center**](https://www.bentley.edu/university-life/student-health/counseling-center)",
         unsafe_allow_html=True
     )
+    print(""^100)
 
     # Return to Homepage button
     if st.button("Back to Homepage"):
