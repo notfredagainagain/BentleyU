@@ -6,13 +6,13 @@ import random
 # Fetch OpenAI API key from environment variables
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# ChatGPT interaction function with increased max_tokens for longer responses
-def get_chatgpt_response(user_input, max_tokens=75):  # Adjusted max_tokens for more comprehensive answers
+# ChatGPT interaction function limited to approximately 250 words
+def get_chatgpt_response(user_input, max_tokens=330):  # 330 tokens ≈ 250 words
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "system", "content": "You are a helpful assistant. Keep responses concise and limit them to about 250 words."},
                 {"role": "user", "content": user_input}
             ],
             max_tokens=max_tokens
@@ -100,7 +100,7 @@ if st.session_state.page == "Healthy Eating":
     # ChatGPT for additional questions on nutrition
     user_input_eating = st.text_input("Have a question about nutrition or diet planning?")
     if user_input_eating:
-        response = get_chatgpt_response(user_input_eating, max_tokens=100)
+        response = get_chatgpt_response(user_input_eating)
         st.write(response)
 
     # Return to Homepage button
@@ -257,13 +257,13 @@ if st.session_state.page == "Healthy Lifestyle":
             )
         else:
             if st.button("Generate a Workout Plan"):
-                workout_plan = get_chatgpt_response(resource_info["prompt"], max_tokens=75)
+                workout_plan = get_chatgpt_response(resource_info["prompt"])
                 st.write(workout_plan)
 
         # ChatGPT for additional fitness questions
         user_input_lifestyle = st.text_input("Have a question about fitness or staying active?")
         if user_input_lifestyle:
-            response = get_chatgpt_response(user_input_lifestyle, max_tokens=50)
+            response = get_chatgpt_response(user_input_lifestyle)
             st.write(response)
 
         # Back button to reset the goal selection
@@ -327,7 +327,7 @@ if st.session_state.page == "Healthy Mindsets":
     # ChatGPT for additional mental wellness questions
     user_input_mindset = st.text_input("Have a question about mental wellness?")
     if user_input_mindset:
-        response = get_chatgpt_response(user_input_mindset, max_tokens=100)
+        response = get_chatgpt_response(user_input_mindset)
         st.write(response)
 
     # Return to Homepage button
