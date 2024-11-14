@@ -42,7 +42,9 @@ def go_back():
 
 # Home page with options to navigate to main features
 if st.session_state.page == "home":
-    st.title("WellNest")
+    # Display the logo at the top of the app
+    st.image("logo.png", width=250)  # Adjust the path and width as needed
+    
     st.subheader("Welcome!")
     st.write("Select a wellness area to get started:")
 
@@ -53,6 +55,7 @@ if st.session_state.page == "home":
         pass
     if st.button("Healthy Mindsets", on_click=set_page, args=("Healthy Mindsets",)):
         pass
+
 
 # ---------------------- Healthy Eating Section ----------------------
 if st.session_state.page == "Healthy Eating":
